@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Web AR with Hiro</title>
+<!-- 引入 A-Frame 核心程式庫，用於建立 3D 場景 -->
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<!-- 引入 AR.js 擴充功能（針對 A-Frame 設計的 AR 模組） -->
+<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+</head>
+<body>
+<!-- 建立 AR 場景 -->
+<!-- embedded: 讓 AR 畫面嵌入在頁面中（而非全螢幕） -->
+<!-- sourceType: webcam 表示使用相機鏡頭作為來源 -->
+<!-- debugUIEnabled: true 開啟左下角偵測狀態資訊（幫助教學觀察） -->
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: true;">
+<!-- 使用內建 Hiro 標記作為觸發圖 -->
+<a-marker preset="hiro">
+<!-- 放置一個立方體（a-box）作為顯示物件 -->
+<!-- position="0 0.5 0" 表示位於標記上方 0.5 單位的高度 -->
+<!-- rotation="0 45 0" 表示水平旋轉 45 度 -->
+<!-- color="blue" 設定顏色為藍色 -->
+<a-box position="0 0.5 0" rotation="0 45 0" color="pink"></a-box>
+<!-- 加入環境光源（ambient light） -->
+<!-- 避免物件在未打光情況下顯示為黑色 -->
+<a-light type="ambient" intensity="0.8"></a-light>
+</a-marker>
+<!-- 加入相機元件，讓 AR.js 控制鏡頭追蹤 -->
+<a-entity camera></a-entity>
+</a-scene>
+</body>
+</html>

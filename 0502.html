@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>MindAR Example</title>
+<script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+<style>
+html, body {
+margin: 0; padding: 0;
+width: 100%; height: 100%;
+overflow: hidden;
+}
+a-scene {
+width: 100%; height: 100%;
+position: fixed; top: 0; left: 0;
+}
+/* 隱藏所有 MindAR 預設 UI */
+.mindar-ui-loading,
+.mindar-ui-error,
+.mindar-ui-scanning {
+display: none;
+}
+/* 自訂文字的外層 DIV */
+#custom-text {
+display: none; /* 預設隱藏 */
+position: fixed;
+top: 20px; /* 距離頂部 20px */
+left: 50%;
+transform: translateX(-50%);
+background: rgba(0, 0, 0, 0.6);
+color: white;
+padding: 0.5em 1em;
+font-size: 1.5em;
+border-radius: 0.3em;
+z-index: 9999;
+pointer-events: none;
+}
+</style>
+</head>

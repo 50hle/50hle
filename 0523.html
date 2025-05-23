@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>MindAR 影片播放互動</title>
+<!-- 載入 A-Frame 和 MindAR -->
+<script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-
+aframe.prod.js"></script>
+<style>
+body { margin: 0; overflow: hidden; }
+</style>
+</head>
+<body>
+<!-- A-Frame 場景設定 -->
+<a-scene
+mindar-image="imageTargetSrc: targets.mind; autoStart: true; uiScanning: true;"
+color-space="sRGB"
+renderer="colorManagement: true; physicallyCorrectLights: true"
+vr-mode-ui="enabled: false"
+device-orientation-permission-ui="enabled: false"
+>
+<!-- 載入影片資源（要與 HTML 放在同一目錄） -->
+<a-assets>
+<video id="introVid" src="video.mp4" preload="auto" loop muted></video>
+</a-assets>
+<!-- 環境光線，避免影片太暗 -->
+<a-light type="ambient" intensity="1.5"></a-light>
+<!-- 相機（禁止滑動視角） -->
+<a-camera look-controls="enabled: false"></a-camera>
+<!-- 掃描到圖卡後顯示影片 -->
+<a-entity mindar-image-target="targetIndex: 0">
+<a-video
+id="videoEntity"
+src="#introVid"
+width="0.7" height="1.2"
+autoplay="false"
+loop="true"
+material="shader: flat"
+position="0 0 0">
+</a-video>
+</a-entity>
+</a-scene>
+<!-- 點擊播放 / 暫停的互動邏輯 -->
+<script>
+// 取得影片 DOM 與影片平面實體
+const video = document.querySelector('#introVid');
+const videoPlane = document.querySelector('#videoEntity');
+// 取得包含 mindar-image-target 屬性的實體，對它監聽 targetFound 事件
+const targetEntity = document.querySelector('a-entity[mindar-image-target]');
+// （可選）保留點擊切換播放／暫停功能
+videoPlane.addEventListener('click', () => {
+if (video.paused) {
+video.play();
+} else {
+video.pause();
+}
+});
+// 當偵測到 target 被找到時，自動播放影片
+targetEntity.addEventListener('targetFound', () => {
+// console.log('Target Found，開始播放影片');
+video.play();
+});
+// 當偵測到 target 遺失時，自動暫停並重置播放時間
+targetEntity.addEventListener('targetLost', () => {
+// console.log('Target Lost，暫停並重置影片');
+video.pause();
+video.currentTime = 0;
+});
+</script>
+</body>
+</html>
